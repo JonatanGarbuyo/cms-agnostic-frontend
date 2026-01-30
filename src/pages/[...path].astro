@@ -1,0 +1,31 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { routeEngine } from "../routing";
+import { templates } from "../templates";
+
+const url = new URL(Astro.request.url);
+console.log(">>> URL: ", url); ///////////
+// const q = url.searchParams.get("q"); // "algo-de-query"
+let context;
+
+try {
+	context = await routeEngine.run(url);
+} catch (error) {
+	if (error.code === "ROUTE_NOT_FOUND") {
+		return Astro.redirect("/404");
+	}
+	throw error;
+}
+
+// console.log(">>> CONTEXT: ", context); /////////////
+
+const Template = templates[context.template];
+
+if (!Template) {
+	return Astro.redirect("/404");
+}
+---
+
+<Layout>
+	<Template context={context} />
+</Layout>
