@@ -1,0 +1,28 @@
+---
+const { headline } = Astro.props;
+---
+
+<div class="article-layout">
+	<div class="article-layout__top">
+		<header class="masthead">
+			<span> Masthead </span>
+			<!-- <img src="logo" alt="logo" /> -->
+			<nav>
+				<ul class="">
+					<li class="a span">home</li>
+					<li class="a span">deportes</li>
+					<li class="a span">nosotros</li>
+				</ul>
+			</nav>
+		</header>
+	</div>
+	<div class="article-layout__fullwidth_top"></div>
+	<div class="article-layout__body">
+		<article>
+			<h1>{headline}</h1>
+		</article>
+	</div>
+	<div class="article-layout__rigth-rail"></div>
+	<div class="article-layout__fullwidth_bottom"></div>
+	<div class="article-layout__bottom"></div>
+</div>

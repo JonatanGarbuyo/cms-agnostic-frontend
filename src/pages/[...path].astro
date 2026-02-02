@@ -4,12 +4,12 @@ import { routeEngine } from "../routing";
 import { templates } from "../templates";
 
 const url = new URL(Astro.request.url);
-console.log(">>> URL: ", url); ///////////
+// console.log(">>> URL: ", url); ///////////
 // const q = url.searchParams.get("q"); // "algo-de-query"
 let context;
 
 try {
-	context = await routeEngine.run(url);
+	context = await routeEngine.resolve(url);
 } catch (error) {
 	if (error.code === "ROUTE_NOT_FOUND") {
 		return Astro.redirect("/404");
@@ -20,6 +20,7 @@ try {
 // console.log(">>> CONTEXT: ", context); /////////////
 
 const Template = templates[context.template];
+const vm = Template.ViewModel(context);
 
 if (!Template) {
 	return Astro.redirect("/404");
@@ -27,5 +28,9 @@ if (!Template) {
 ---
 
 <Layout>
-	<Template context={context} />
+	<Fragment slot="head">
+		<Template.Head {...vm.head} />
+	</Fragment>
+
+	<Template.Body {...vm.body} />
 </Layout>

@@ -29,7 +29,7 @@ export function createRouteEngine() {
 			return this;
 		},
 
-		async run(url) {
+		async resolve(url) {
 			const context = createRouteContext({ url });
 
 			for (const route of routes) {

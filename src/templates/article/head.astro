@@ -1,0 +1,13 @@
+---
+const { articleUrl, description, headline } = Astro.props;
+---
+
+<Fragment id="head">
+	<title>{headline}</title>
+	<meta name="robots" content="index, follow, max-image-preview:large" />
+	<meta name="description" content={description} />
+	<meta property="og:description" content={description} />
+	<meta property="og:title" content={headline} />
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content={articleUrl} />
+</Fragment>
