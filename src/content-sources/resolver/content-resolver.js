@@ -32,18 +32,11 @@ export async function contentResolver({ source = "", params = {} }) {
 		return null;
 	}
 
-	try {
-		const contentSource = await loadSourceByFilename(source);
+	const contentSource = await loadSourceByFilename(source);
 
-		if (!contentSource || typeof contentSource.fetch !== "function") {
-			return null;
-		}
-
-		const result = await contentSource.fetch(params);
-
-		return result;
-	} catch (error) {
-		console.error("[ContentResolver]", error);
-		return null;
+	if (!contentSource || typeof contentSource.fetch !== "function") {
+		throw new Error(`Invalid content source: ${source}`);
 	}
+
+	return await contentSource.fetch(params);
 }

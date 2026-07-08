@@ -22,6 +22,15 @@ export class ContentNotFound extends RouteEngineError {
 	}
 }
 
+export class ContentSourceError extends RouteEngineError {
+	code = "CONTENT_SOURCE_ERROR";
+
+	constructor(details) {
+		super("Content source error", details);
+		this.cause = details?.cause;
+	}
+}
+
 export class TemplateNotFound extends RouteEngineError {
 	code = "TEMPLATE_NOT_FOUND";
 

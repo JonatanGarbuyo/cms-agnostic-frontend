@@ -23,6 +23,12 @@ try {
 	if (["ROUTE_NOT_FOUND", "CONTENT_NOT_FOUND", "TEMPLATE_NOT_FOUND"].includes(error.code)) {
 		return Astro.redirect("/404");
 	}
+
+	if (error.code === "CONTENT_SOURCE_ERROR") {
+		console.error("[RouteEngine]", error);
+		return new Response("Internal Server Error", { status: 500 });
+	}
+
 	throw error;
 }
 ---
