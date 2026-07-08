@@ -1,5 +1,9 @@
 ---
-const { headline } = Astro.props;
+import articleViewModel from "./view-model";
+
+const { context } = Astro.props;
+const vm = articleViewModel(context);
+const { articleUrl, description, headline } = vm;
 ---
 
 <div class="article-layout">
@@ -8,7 +12,7 @@ const { headline } = Astro.props;
 			<span> Masthead </span>
 			<!-- <img src="logo" alt="logo" /> -->
 			<nav>
-				<ul class="">
+				<ul class="masthead__nav-list">
 					<li class="a span">home</li>
 					<li class="a span">deportes</li>
 					<li class="a span">nosotros</li>

@@ -1,5 +1,9 @@
 ---
-const { articleUrl, description, headline } = Astro.props;
+import articleViewModel from "./view-model";
+
+const { context } = Astro.props;
+const vm = articleViewModel(context);
+const { articleUrl, description, headline } = vm;
 ---
 
 <Fragment id="head">

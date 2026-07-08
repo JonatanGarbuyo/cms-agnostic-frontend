@@ -4,8 +4,6 @@ import { routeEngine } from "../routing";
 import { templates } from "../templates";
 
 const url = new URL(Astro.request.url);
-// console.log(">>> URL: ", url); ///////////
-// const q = url.searchParams.get("q"); // "algo-de-query"
 let context;
 
 try {
@@ -17,10 +15,7 @@ try {
 	throw error;
 }
 
-// console.log(">>> CONTEXT: ", context); /////////////
-
 const Template = templates[context.template];
-const vm = Template.ViewModel(context);
 
 if (!Template) {
 	return Astro.redirect("/404");
@@ -29,8 +24,8 @@ if (!Template) {
 
 <Layout>
 	<Fragment slot="head">
-		<Template.Head {...vm.head} />
+		<Template.Head context={context} />
 	</Fragment>
 
-	<Template.Body {...vm.body} />
+	<Template.Body context={context} />
 </Layout>

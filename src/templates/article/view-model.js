@@ -1,4 +1,4 @@
-export default function ViewModel(context) {
+export default function articleViewModel(context) {
 	const content = context.content;
 
 	const slug = content.slug ?? "";
@@ -9,14 +9,8 @@ export default function ViewModel(context) {
 	const description = content.subtitle || content.description || "";
 
 	return {
-		head: {
-			articleUrl,
-			description,
-			headline,
-		},
-		body: {
-			description,
-			headline,
-		},
+		articleUrl,
+		description,
+		headline,
 	};
 }
