@@ -1,4 +1,4 @@
-import { createRouteContext } from "./context";
+import { createRouteContext } from "./routeContext";
 import { RouteNotFound } from "./errors";
 
 export function createRouteEngine() {
@@ -30,7 +30,7 @@ export function createRouteEngine() {
 		},
 
 		async resolve(url) {
-			const context = createRouteContext({ url });
+			const routeContext = createRouteContext({ url });
 
 			for (const route of routes) {
 				const patternResult = route.urlPattern.exec({
@@ -43,20 +43,20 @@ export function createRouteEngine() {
 
 				if (!patternResult || !areConstraintsMet) continue;
 
-				context.route = route;
-				context.patternResult = patternResult;
+				routeContext.route = route;
+				routeContext.patternResult = patternResult;
 				break;
 			}
 
-			if (!context.route) {
+			if (!routeContext.route) {
 				throw new RouteNotFound();
 			}
 
 			for (const step of lifecycleSteps) {
-				await step(context);
+				await step(routeContext);
 			}
 
-			return context;
+			return routeContext;
 		},
 	};
 }

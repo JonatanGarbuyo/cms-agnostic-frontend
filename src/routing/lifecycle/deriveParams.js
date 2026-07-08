@@ -1,14 +1,14 @@
-export function deriveParams(context) {
+export function deriveParams(routeContext) {
 	const contentParams = {};
 
-	for (const param of context.route.content.params) {
+	for (const param of routeContext.route.content.params) {
 		switch (param.from) {
 			case "pattern":
-				contentParams[param.key] = context.patternResult.pathname.groups[param.value];
+				contentParams[param.key] = routeContext.patternResult.pathname.groups[param.value];
 				break;
 
 			case "parameter":
-				contentParams[param.key] = context.url.searchParams.get(param.value);
+				contentParams[param.key] = routeContext.url.searchParams.get(param.value);
 				break;
 
 			case "static":
@@ -17,6 +17,6 @@ export function deriveParams(context) {
 		}
 	}
 
-	context.contentParams = contentParams;
-	return context;
+	routeContext.contentParams = contentParams;
+	return routeContext;
 }

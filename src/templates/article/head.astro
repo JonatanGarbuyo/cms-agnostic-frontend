@@ -1,8 +1,8 @@
 ---
 import articleViewModel from "./view-model";
 
-const { context } = Astro.props;
-const vm = articleViewModel(context);
+const { routeContext } = Astro.props;
+const vm = articleViewModel(routeContext);
 const { articleUrl, description, headline } = vm;
 ---
 

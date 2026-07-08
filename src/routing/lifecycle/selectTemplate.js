@@ -1,17 +1,17 @@
-export function selectTemplate(context) {
-	const { templates } = context.route;
+export function selectTemplate(routeContext) {
+	const { templates } = routeContext.route;
 	let resolved = templates.default;
 
 	if (templates.variants) {
 		for (const variant of templates.variants) {
 			const { field, eq } = variant.when;
-			if (context.content?.[field] === eq) {
+			if (routeContext.content?.[field] === eq) {
 				resolved = variant.use;
 				break;
 			}
 		}
 	}
 
-	context.template = resolved;
-	return context;
+	routeContext.template = resolved;
+	return routeContext;
 }

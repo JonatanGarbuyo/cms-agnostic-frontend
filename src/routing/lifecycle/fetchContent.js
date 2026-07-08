@@ -1,12 +1,12 @@
 import { contentResolver } from "../../content-sources/resolver/content-resolver";
 
-export async function fetchContent(context) {
-	if (!context.route.content.source) return;
+export async function fetchContent(routeContext) {
+	if (!routeContext.route.content.source) return;
 
-	context.content = await contentResolver({
-		source: context.route.content.source,
-		params: context.contentParams,
+	routeContext.content = await contentResolver({
+		source: routeContext.route.content.source,
+		params: routeContext.contentParams,
 	});
 
-	return context;
+	return routeContext;
 }

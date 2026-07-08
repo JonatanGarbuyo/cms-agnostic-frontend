@@ -4,10 +4,10 @@ import { routeEngine } from "../routing";
 import { templates } from "../templates";
 
 const url = new URL(Astro.request.url);
-let context;
+let routeContext;
 
 try {
-	context = await routeEngine.resolve(url);
+	routeContext = await routeEngine.resolve(url);
 } catch (error) {
 	if (error.code === "ROUTE_NOT_FOUND") {
 		return Astro.redirect("/404");
@@ -15,7 +15,7 @@ try {
 	throw error;
 }
 
-const Template = templates[context.template];
+const Template = templates[routeContext.template];
 
 if (!Template) {
 	return Astro.redirect("/404");
@@ -24,8 +24,8 @@ if (!Template) {
 
 <Layout>
 	<Fragment slot="head">
-		<Template.Head context={context} />
+		<Template.Head routeContext={routeContext} />
 	</Fragment>
 
-	<Template.Body context={context} />
+	<Template.Body routeContext={routeContext} />
 </Layout>
