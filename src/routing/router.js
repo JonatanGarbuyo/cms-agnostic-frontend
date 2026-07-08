@@ -49,7 +49,9 @@ export function createRouteEngine() {
 			}
 
 			if (!routeContext.route) {
-				throw new RouteNotFound();
+				throw new RouteNotFound({
+					pathname: url.pathname,
+				});
 			}
 
 			for (const step of lifecycleSteps) {

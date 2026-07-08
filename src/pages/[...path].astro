@@ -1,24 +1,29 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { routeEngine } from "../routing";
+import { TemplateNotFound } from "../routing/errors";
 import { templates } from "../templates";
 
 const url = new URL(Astro.request.url);
 let routeContext;
+let Template;
 
 try {
 	routeContext = await routeEngine.resolve(url);
+
+	Template = templates[routeContext.template];
+
+	if (!Template) {
+		throw new TemplateNotFound({
+			route: routeContext.route.name,
+			template: routeContext.template,
+		});
+	}
 } catch (error) {
-	if (error.code === "ROUTE_NOT_FOUND") {
+	if (["ROUTE_NOT_FOUND", "CONTENT_NOT_FOUND", "TEMPLATE_NOT_FOUND"].includes(error.code)) {
 		return Astro.redirect("/404");
 	}
 	throw error;
-}
-
-const Template = templates[routeContext.template];
-
-if (!Template) {
-	return Astro.redirect("/404");
 }
 ---
 
