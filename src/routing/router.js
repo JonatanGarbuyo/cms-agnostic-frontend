@@ -30,7 +30,7 @@ export function createRouteEngine() {
 		},
 
 		async resolve(url) {
-			const routeContext = createRouteContext({ url });
+			let routeContext = createRouteContext({ url });
 
 			for (const route of routes) {
 				const patternResult = route.urlPattern.exec({
@@ -53,7 +53,15 @@ export function createRouteEngine() {
 			}
 
 			for (const step of lifecycleSteps) {
-				await step(routeContext);
+				const nextRouteContext = await step(routeContext);
+
+				if (!nextRouteContext) {
+					throw new Error(
+						`Lifecycle step "${step.name || "anonymous"}" did not return routeContext`,
+					);
+				}
+
+				routeContext = nextRouteContext;
 			}
 
 			return routeContext;
