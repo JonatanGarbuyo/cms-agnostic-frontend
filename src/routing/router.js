@@ -40,7 +40,6 @@ export function createRouteEngine() {
 				const areConstraintsMet = (route.urlParams ?? []).every(
 					({ key, required, value }) => !required || value === url.searchParams.get(key),
 				);
-				// console.log(">>> MATCH", { patternResult, areConstraintsMet }); ////////
 
 				if (!patternResult || !areConstraintsMet) continue;
 

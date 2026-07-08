@@ -13,4 +13,5 @@ export function selectTemplate(context) {
 	}
 
 	context.template = resolved;
+	return context;
 }
